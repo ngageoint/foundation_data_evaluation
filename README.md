@@ -1,7 +1,7 @@
-# Foundation Data Evaluation (FDE)
+## Foundation Data Evaluation (FDE)
 A function to approximate precision and recall for a test road network as compared to a reference road network. FDE can account for geo-registration errors when the road network comes from different imagery or human variations of extraction.
 
-## Origin
+### Origin
 FDE was developed at the National Geospatial-Intelligence Agency (NGA) by a federal government employee in the course of their employment, so it is not subject to copyright protection and is in the public domain in the United States. 
 
 You are free to use, for any purpose, the core public domain portions of FDE. Modifications back to the cores of any dependency function are subject to the original license and are separate from the core public domain work. 
@@ -14,8 +14,11 @@ If you'd like to contribute to this project, please make a pull request. We'll r
 
 ### Dependencies
 Geopandas
-Pandas 
+
+Pandas
+
 Tkinter
+
 Matplotlib
 
 
