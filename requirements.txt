@@ -1,0 +1,4 @@
+geopandas==0.8.1
+matplotlib==3.3.3
+pandas==1.1.3
+pygeos==0.8
