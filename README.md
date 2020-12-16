@@ -27,12 +27,13 @@ Pygeos
 
 #### Methodology:
 
-1. The user chooses two road datasets - one test road network and one reference network.
+1. The user chooses two road datasets - one test road network and one reference network. File types allowed include shp, geojson, gpkg, gdb, and csv.
 2. The user is asked for a road buffer. Submissions should be integers with a recommended 5 meters (so roads are buffered to 10m wide) if both road networks have been extracted from the same imagery or 10 meters (so roads are buffered to 20m wide) if the road networks have been extracted from different imagery. This difference is to account for georegistration issues.
-3. The script will reproject the crs to WGS84 Pseudo-Mercator (epsg:3857) to get the units into meters and then buffer the networks to the users specification.
-4. The script then creates a geodataframe with all of the intersecting polygons between the test and reference datasets.
-5. To calculate precision: The intersection polygons are grouped by test set feature. For each test feature, the proportion of intersection area against test feature area is calculated. Precision is calculated at every threshold (0.0, 0.1, 0.2, ..., 0.99) as (# of features with intersection area proportion > threshold) / (total test feature count) and (area of features with intersection area proportion > threshold) / (total test feature area).
-6. To calculate recall: The intersection polygons are grouped by reference set feature. For each reference feature, the proportion of intersection area against reference feature area is calculated. Recall is calculated at every threshold (0.0, 0.1, 0.2, ..., 0.99) as (# of features with intersection area proportion > threshold) / (total reference feature count) and (area of features with intersection area proportion > threshold) / (total reference feature area).
+3. The last input is for a folder to save the output files.
+4. The script will reproject the crs to WGS84 Pseudo-Mercator (epsg:3857) to get the units into meters and then buffer the networks to the users specification.
+5. The script then creates a geodataframe with all of the intersecting polygons between the test and reference datasets.
+6. To calculate precision: The intersection polygons are grouped by test set feature. For each test feature, the proportion of intersection area against test feature area is calculated. Precision is calculated at every threshold (0.0, 0.1, 0.2, ..., 0.99) as (# of features with intersection area proportion > threshold) / (total test feature count) and (area of features with intersection area proportion > threshold) / (total test feature area).
+7. To calculate recall: The intersection polygons are grouped by reference set feature. For each reference feature, the proportion of intersection area against reference feature area is calculated. Recall is calculated at every threshold (0.0, 0.1, 0.2, ..., 0.99) as (# of features with intersection area proportion > threshold) / (total reference feature count) and (area of features with intersection area proportion > threshold) / (total reference feature area).
 
 The example below shows a reference and test example buffered at 5 meters. 
 ![Example1](./images/five_meter_example.png)
