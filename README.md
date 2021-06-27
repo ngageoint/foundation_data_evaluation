@@ -55,8 +55,8 @@ Another example shows a reference and test example buffered at 10 meters.
 ![Summary](./images/summary_stats.png)
 
 #### To run the code:
-1. Create virtual environment: python3 -m venv /loc/to/venv
-2. Activate the virtual environment: source /loc/to/venv/bin/activate
-3. Clone repo git clone https://github.com/ngageoint/foundation_data_evaluation.git
-4. pip3 install -r foundation_data_evaluation/requirements.txt
-5. python3 foundation_data_evaluation/roads_eval.py
+1. Create virtual environment: ```python3 -m venv /loc/to/venv```
+2. Activate the virtual environment: ```source /loc/to/venv/bin/activate```
+3. Clone repo ```git clone https://github.com/ngageoint/foundation_data_evaluation.git```
+4. Install required packages ```pip3 install -r foundation_data_evaluation/requirements.txt```
+5. Run Roads script: ```python3 foundation_data_evaluation/roads_eval.py```
