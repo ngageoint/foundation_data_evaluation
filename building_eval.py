@@ -63,7 +63,7 @@ def overlap_analysis_floor(gdf1, gdf2):
     recall['prop'] = recall['intersect_area'] / recall.area
     recall = recall[['index', 'iou', 'area']]
 
-    return precision, recall, intersection
+    return precision, recall, intersection_rec
 
 
 def overlap_analysis_ceil(gdf1, gdf2):
