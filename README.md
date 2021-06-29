@@ -60,3 +60,38 @@ Another example shows a reference and test example buffered at 10 meters.
 3. Clone repo ```git clone https://github.com/ngageoint/foundation_data_evaluation.git```
 4. Install required packages ```pip3 install -r foundation_data_evaluation/requirements.txt```
 5. Run Roads script: ```python3 foundation_data_evaluation/roads_eval.py```
+
+### building_eval.py
+
+#### Methodology:
+
+1. The user chooses two road datasets - one test building file and one reference building file. File types allowed include shp, geojson, gpkg, gdb, and csv. Note, GDB or GPKG files will require tweaking so the correct layer is selected/read in.
+2. The last input is for a folder to save the output files.
+3. The script will reproject the crs to WGS84 Pseudo-Mercator (epsg:3857) to get the units into meters.
+4. The script then creates a geodataframe with all of the intersecting polygons between the test and reference datasets.
+5. To calculate precision_ceiling: The intersection polygons are grouped by test set feature. For each test feature, the proportion of intersection area against test feature area is calculated. Precision is calculated at every threshold (0.0, 0.1, 0.2, ..., 0.99) as (# of features with intersection area proportion > threshold) / (total test feature count) and (area of features with intersection area proportion > threshold) / (total test feature area).
+6. To calculate recall_ceiling: The intersection polygons are grouped by reference set feature. For each reference feature, the proportion of intersection area against reference feature area is calculated. Recall is calculated at every threshold (0.0, 0.1, 0.2, ..., 0.99) as (# of features with intersection area proportion > threshold) / (total reference feature count) and (area of features with intersection area proportion > threshold) / (total reference feature area).
+7. To calculate precision_floor, each test building is matched to a single reference feature by choosing the reference feature with maximum overlap. Once matches are calculated, all test buildings with no matches are joined back with intersection area 0. Intersection over Union = (Area Intersection) / (Area Reference Feature + Area Test Feature - Area Intersection) is calculated for every test feature. Precision is calculated at every threshold (0.0, 0.1, 0.2, ..., 0.99) as (# of features IoU > threshold) / (total test feature count) and (area of features with IoU > threshold) / (total test feature area).
+8. To calculate recall_floor, each reference building is matched to a single test feature by choosing the test feature with maximum overlap. Once matches are calculated, all reference buildings with no matches are joined back with intersection area 0. Intersection over Union = (Area Intersection) / (Area Reference Feature + Area Test Feature - Area Intersection) is calculated for every reference feature. Recall is calculated at every threshold (0.0, 0.1, 0.2, ..., 0.99) as (# of features IoU > threshold) / (total test feature count) and (area of features with IoU > threshold) / (total test feature area).
+9. If both datasets have a column called "height", the script will automatically compute an analysis using the recall_floor IOU geodataframe. The difference between heights of those matches is computed to estimate R^2 and Root Mean Square Error.
+
+#### Outputs:
+
+1. results_ceiling.csv and results_floor.csv - For each threshold [0.1, 0.2, .., 1.0], precision by feature count, precision by feature area, recall by feature count, and recall by feature area are given in a table.
+![Results](./images/results.png)
+2. precision_ceiling.png and precision_floor.png - graph of the precision by feature area and feature count from results.csv
+![Precision](./images/precision.png)
+3. recall_ceiling.png and recall_floor - graph of the recall by feature area and feature count from results.csv
+![Recall](./images/recall.png)
+4. summary_stats.csv provides feature count, feature area, total overlap / total area, median(overlap area / total area), mean (overlap area / total area) for both datasets.
+![Summary](./images/summary_stats.png)
+5. If height criteria is met, height_results.csv - For each threshold [0.1, 0.2, .., 1.0] on Intesection over Union, r2, rmse, and feature count will be included.
+6. If height criteria is met, r2.png and rmse.png - graph of the r2 and rmse from the height_results.csv
+
+#### To run the code:
+1. Create virtual environment: ```python3 -m venv /loc/to/venv```
+2. Activate the virtual environment: ```source /loc/to/venv/bin/activate```
+3. Clone repo ```git clone https://github.com/ngageoint/foundation_data_evaluation.git```
+4. Install required packages ```pip3 install -r foundation_data_evaluation/requirements.txt```
+5. Run Roads script: ```python3 foundation_data_evaluation/building_eval.py```
+
